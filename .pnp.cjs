@@ -27,6 +27,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/arrays"
       },
       {
+        "name": "@tidyts/dicts",
+        "reference": "workspace:packages/dicts"
+      },
+      {
         "name": "@tidyts/extends",
         "reference": "workspace:packages/extends"
       },
@@ -39,6 +43,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "ignorePatternData": "(^(?:\\.yarn\\/sdks(?:\\/(?!\\.{1,2}(?:\\/|$))(?:(?:(?!(?:^|\\/)\\.{1,2}(?:\\/|$)).)*?)|$))$)",
     "fallbackExclusionList": [
       ["@tidyts/arrays", ["workspace:packages/arrays"]],
+      ["@tidyts/dicts", ["workspace:packages/dicts"]],
       ["@tidyts/extends", ["workspace:packages/extends"]],
       ["@tidyts/types", ["workspace:packages/types"]],
       ["tidyts", ["workspace:."]]
@@ -140,6 +145,21 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/arrays/",
           "packageDependencies": [
             ["@tidyts/arrays", "workspace:packages/arrays"],
+            ["@tidyts/types", "workspace:packages/types"],
+            ["@types/node", "npm:17.0.21"],
+            ["ts-node", "virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:10.6.0"],
+            ["tslib", "npm:2.3.1"],
+            ["tsup", "virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:5.11.13"],
+            ["typescript", "patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"]
+          ],
+          "linkType": "SOFT",
+        }]
+      ]],
+      ["@tidyts/dicts", [
+        ["workspace:packages/dicts", {
+          "packageLocation": "./packages/dicts/",
+          "packageDependencies": [
+            ["@tidyts/dicts", "workspace:packages/dicts"],
             ["@tidyts/types", "workspace:packages/types"],
             ["@types/node", "npm:17.0.21"],
             ["ts-node", "virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:10.6.0"],

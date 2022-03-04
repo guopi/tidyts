@@ -35,3 +35,6 @@ export function enableTidyExtends() {
         }
     }
 }
+
+
+export * from './test1'
