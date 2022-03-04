@@ -25,12 +25,22 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       {
         "name": "@tidyts/arrays",
         "reference": "workspace:packages/arrays"
+      },
+      {
+        "name": "@tidyts/extends",
+        "reference": "workspace:packages/extends"
+      },
+      {
+        "name": "@tidyts/types",
+        "reference": "workspace:packages/types"
       }
     ],
     "enableTopLevelFallback": true,
     "ignorePatternData": "(^(?:\\.yarn\\/sdks(?:\\/(?!\\.{1,2}(?:\\/|$))(?:(?:(?!(?:^|\\/)\\.{1,2}(?:\\/|$)).)*?)|$))$)",
     "fallbackExclusionList": [
       ["@tidyts/arrays", ["workspace:packages/arrays"]],
+      ["@tidyts/extends", ["workspace:packages/extends"]],
+      ["@tidyts/types", ["workspace:packages/types"]],
       ["tidyts", ["workspace:."]]
     ],
     "fallbackPool": [
@@ -130,10 +140,39 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/arrays/",
           "packageDependencies": [
             ["@tidyts/arrays", "workspace:packages/arrays"],
+            ["@tidyts/types", "workspace:packages/types"],
             ["@types/node", "npm:17.0.21"],
-            ["ts-node", "virtual:6575fea94b2538bb0204837072eba746fdbc2190955fb6e284608a1087d5554df29e4059af229701523ea0a77e6f53ebd5a5760b2df44ff577ed7788e5fc3af2#npm:10.6.0"],
+            ["ts-node", "virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:10.6.0"],
             ["tslib", "npm:2.3.1"],
-            ["tsup", "virtual:6575fea94b2538bb0204837072eba746fdbc2190955fb6e284608a1087d5554df29e4059af229701523ea0a77e6f53ebd5a5760b2df44ff577ed7788e5fc3af2#npm:5.11.13"],
+            ["tsup", "virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:5.11.13"],
+            ["typescript", "patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"]
+          ],
+          "linkType": "SOFT",
+        }]
+      ]],
+      ["@tidyts/extends", [
+        ["workspace:packages/extends", {
+          "packageLocation": "./packages/extends/",
+          "packageDependencies": [
+            ["@tidyts/extends", "workspace:packages/extends"],
+            ["@types/node", "npm:17.0.21"],
+            ["ts-node", "virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:10.6.0"],
+            ["tslib", "npm:2.3.1"],
+            ["tsup", "virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:5.11.13"],
+            ["typescript", "patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"]
+          ],
+          "linkType": "SOFT",
+        }]
+      ]],
+      ["@tidyts/types", [
+        ["workspace:packages/types", {
+          "packageLocation": "./packages/types/",
+          "packageDependencies": [
+            ["@tidyts/types", "workspace:packages/types"],
+            ["@types/node", "npm:17.0.21"],
+            ["ts-node", "virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:10.6.0"],
+            ["tslib", "npm:2.3.1"],
+            ["tsup", "virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:5.11.13"],
             ["typescript", "patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"]
           ],
           "linkType": "SOFT",
@@ -367,10 +406,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:74b90eeca31bd53c0d2d2c118c84d4c98354c936a9f42e5c09b7a6d32544255a495aae9c079555711e6d219b90d81d184b199ae08a15361259a11aeadab76f49#npm:3.0.4", {
-          "packageLocation": "./.yarn/__virtual__/bundle-require-virtual-e93e62e642/0/cache/bundle-require-npm-3.0.4-f7398de4aa-572ade4e79.zip/node_modules/bundle-require/",
+        ["virtual:4824b1f641eae837804020ff9de0f5de0f814f591f9370c7be0e8c41640f9f8ca9db95dc57222f553cc486e2130f96e8c746aea6aa26fab000ac2c4a8768bb5b#npm:3.0.4", {
+          "packageLocation": "./.yarn/__virtual__/bundle-require-virtual-8139644ad2/0/cache/bundle-require-npm-3.0.4-f7398de4aa-572ade4e79.zip/node_modules/bundle-require/",
           "packageDependencies": [
-            ["bundle-require", "virtual:74b90eeca31bd53c0d2d2c118c84d4c98354c936a9f42e5c09b7a6d32544255a495aae9c079555711e6d219b90d81d184b199ae08a15361259a11aeadab76f49#npm:3.0.4"],
+            ["bundle-require", "virtual:4824b1f641eae837804020ff9de0f5de0f814f591f9370c7be0e8c41640f9f8ca9db95dc57222f553cc486e2130f96e8c746aea6aa26fab000ac2c4a8768bb5b#npm:3.0.4"],
             ["@types/esbuild", null],
             ["esbuild", "npm:0.14.24"],
             ["load-tsconfig", "npm:0.2.3"]
@@ -1603,10 +1642,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:74b90eeca31bd53c0d2d2c118c84d4c98354c936a9f42e5c09b7a6d32544255a495aae9c079555711e6d219b90d81d184b199ae08a15361259a11aeadab76f49#npm:3.1.3", {
-          "packageLocation": "./.yarn/__virtual__/postcss-load-config-virtual-25bc0e2d3d/0/cache/postcss-load-config-npm-3.1.3-8923b58f68-7d187d339f.zip/node_modules/postcss-load-config/",
+        ["virtual:4824b1f641eae837804020ff9de0f5de0f814f591f9370c7be0e8c41640f9f8ca9db95dc57222f553cc486e2130f96e8c746aea6aa26fab000ac2c4a8768bb5b#npm:3.1.3", {
+          "packageLocation": "./.yarn/__virtual__/postcss-load-config-virtual-b85d89b64b/0/cache/postcss-load-config-npm-3.1.3-8923b58f68-7d187d339f.zip/node_modules/postcss-load-config/",
           "packageDependencies": [
-            ["postcss-load-config", "virtual:74b90eeca31bd53c0d2d2c118c84d4c98354c936a9f42e5c09b7a6d32544255a495aae9c079555711e6d219b90d81d184b199ae08a15361259a11aeadab76f49#npm:3.1.3"],
+            ["postcss-load-config", "virtual:4824b1f641eae837804020ff9de0f5de0f814f591f9370c7be0e8c41640f9f8ca9db95dc57222f553cc486e2130f96e8c746aea6aa26fab000ac2c4a8768bb5b#npm:3.1.3"],
             ["@types/ts-node", null],
             ["lilconfig", "npm:2.0.4"],
             ["ts-node", null],
@@ -2001,10 +2040,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:6575fea94b2538bb0204837072eba746fdbc2190955fb6e284608a1087d5554df29e4059af229701523ea0a77e6f53ebd5a5760b2df44ff577ed7788e5fc3af2#npm:10.6.0", {
-          "packageLocation": "./.yarn/__virtual__/ts-node-virtual-52ff6c11df/0/cache/ts-node-npm-10.6.0-612b9f0b29-bc7589d8c3.zip/node_modules/ts-node/",
+        ["virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:10.6.0", {
+          "packageLocation": "./.yarn/__virtual__/ts-node-virtual-c44f7f4744/0/cache/ts-node-npm-10.6.0-612b9f0b29-bc7589d8c3.zip/node_modules/ts-node/",
           "packageDependencies": [
-            ["ts-node", "virtual:6575fea94b2538bb0204837072eba746fdbc2190955fb6e284608a1087d5554df29e4059af229701523ea0a77e6f53ebd5a5760b2df44ff577ed7788e5fc3af2#npm:10.6.0"],
+            ["ts-node", "virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:10.6.0"],
             ["@cspotcode/source-map-support", "npm:0.7.0"],
             ["@swc/core", null],
             ["@swc/wasm", null],
@@ -2055,12 +2094,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],
           "linkType": "SOFT",
         }],
-        ["virtual:6575fea94b2538bb0204837072eba746fdbc2190955fb6e284608a1087d5554df29e4059af229701523ea0a77e6f53ebd5a5760b2df44ff577ed7788e5fc3af2#npm:5.11.13", {
-          "packageLocation": "./.yarn/__virtual__/tsup-virtual-74b90eeca3/0/cache/tsup-npm-5.11.13-698be8fd53-431db4b521.zip/node_modules/tsup/",
+        ["virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:5.11.13", {
+          "packageLocation": "./.yarn/__virtual__/tsup-virtual-4824b1f641/0/cache/tsup-npm-5.11.13-698be8fd53-431db4b521.zip/node_modules/tsup/",
           "packageDependencies": [
-            ["tsup", "virtual:6575fea94b2538bb0204837072eba746fdbc2190955fb6e284608a1087d5554df29e4059af229701523ea0a77e6f53ebd5a5760b2df44ff577ed7788e5fc3af2#npm:5.11.13"],
+            ["tsup", "virtual:e4d6fb3a4337903524017a3ecc4141c381de75ddd58a227b92e9a2fa9293f8f79bb3f7a664ddcab129b3b4e522cb624fe6c7f019b7c9a14696ebb61baa011b67#npm:5.11.13"],
             ["@types/typescript", null],
-            ["bundle-require", "virtual:74b90eeca31bd53c0d2d2c118c84d4c98354c936a9f42e5c09b7a6d32544255a495aae9c079555711e6d219b90d81d184b199ae08a15361259a11aeadab76f49#npm:3.0.4"],
+            ["bundle-require", "virtual:4824b1f641eae837804020ff9de0f5de0f814f591f9370c7be0e8c41640f9f8ca9db95dc57222f553cc486e2130f96e8c746aea6aa26fab000ac2c4a8768bb5b#npm:3.0.4"],
             ["cac", "npm:6.7.12"],
             ["chokidar", "npm:3.5.3"],
             ["debug", "virtual:b86a9fb34323a98c6519528ed55faa0d9b44ca8879307c0b29aa384bde47ff59a7d0c9051b31246f14521dfb71ba3c5d6d0b35c29fffc17bf875aa6ad977d9e8#npm:4.3.3"],
@@ -2068,7 +2107,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["execa", "npm:5.1.1"],
             ["globby", "npm:11.1.0"],
             ["joycon", "npm:3.1.1"],
-            ["postcss-load-config", "virtual:74b90eeca31bd53c0d2d2c118c84d4c98354c936a9f42e5c09b7a6d32544255a495aae9c079555711e6d219b90d81d184b199ae08a15361259a11aeadab76f49#npm:3.1.3"],
+            ["postcss-load-config", "virtual:4824b1f641eae837804020ff9de0f5de0f814f591f9370c7be0e8c41640f9f8ca9db95dc57222f553cc486e2130f96e8c746aea6aa26fab000ac2c4a8768bb5b#npm:3.1.3"],
             ["resolve-from", "npm:5.0.0"],
             ["rollup", "npm:2.69.0"],
             ["source-map", "npm:0.7.3"],

@@ -1,5 +1,3 @@
-export type X = 1
-
 declare global {
     interface Object {
         let<T, R>(this: T, fn: (self: T) => R): R

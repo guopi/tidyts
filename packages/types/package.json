@@ -1,5 +1,5 @@
 {
-  "name": "@tidyts/arrays",
+  "name": "@tidyts/types",
   "version": "1.0.0",
   "packageManager": "yarn@3.1.1",
   "main": "./dist/index.js",
@@ -20,7 +20,6 @@
     "pub": "yarn build && npm publish"
   },
   "devDependencies": {
-    "@tidyts/types": "^1.0.0",
     "@types/node": "^17.0.21",
     "ts-node": "^10.6.0",
     "tslib": "^2.3.1",
