@@ -1,6 +1,7 @@
-import { DictOf, NonNilOf } from '@tidyts/types'
+import { DictOf, NonNilOf } from '@tidyts/base'
 
 export type ArrayElementFunction<T, R> = (v: T, index: number, array: T[]) => R
+export type ArrayElementGroup<K, T> = [K, T[]]
 
 export function compareAny(a: any, b: any): number {
     if (a === b)
@@ -16,26 +17,41 @@ export function arrayIsNotEmpty<T>(array: T[]) {
     return array.length > 0
 }
 
+export function arrayMap<T, R>(
+    array: T[],
+    mapper: ArrayElementFunction<T, R>,
+    dest?: R[],
+): R[] {
+    const length = array.length
+    const ret = dest ?? []
+    for (let i = 0; i < length; i++) {
+        ret.push(mapper(array[i], i, array))
+    }
+    return ret
+}
+
 export function arrayMapNonNil<T, R>(
     array: T[],
-    mapper: ArrayElementFunction<T, R>
+    mapper: ArrayElementFunction<T, R>,
+    dest?: NonNilOf<R>[],
 ): NonNilOf<R>[] {
-    const ret: any[] = []
     const length = array.length
+    const ret = dest ?? []
     for (let i = 0; i < length; i++) {
         const r = mapper(array[i], i, array)
         if (r != null) {
-            ret.push(r)
+            ret.push(r as NonNilOf<R>)
         }
     }
     return ret
 }
 
-export function arrayReject<T, R>(
+export function arrayReject<T>(
     array: T[],
-    predicate: ArrayElementFunction<T, unknown>
+    predicate: ArrayElementFunction<T, unknown>,
+    dest?: T[]
 ): T[] {
-    const ret: T[] = []
+    const ret = dest ?? []
     const length = array.length
     for (let i = 0; i < length; i++) {
         const v = array[i]
@@ -46,8 +62,8 @@ export function arrayReject<T, R>(
     return ret
 }
 
-export function arrayJoinWith<T>(array: T[], separator: T): T[] {
-    const ret: T[] = []
+export function arrayJoinWith<T>(array: T[], separator: T, dest?: T[]): T[] {
+    const ret = dest ?? []
     const length = array.length
     for (let i = 0; i < length; i++) {
         if (i !== 0) {
@@ -112,12 +128,12 @@ export function arrayLastOrUndefined<T>(array: T[]): T | undefined {
     return array[array.length - 1]
 }
 
-export function arrayFilterNonNil<T>(array: T[]): NonNilOf<T>[] {
-    const ret: any[] = []
+export function arrayFilterNonNil<T>(array: T[], dest?: NonNilOf<T>[]): NonNilOf<T>[] {
+    const ret = dest ?? []
     const length = array.length
     for (const v of array) {
         if (v != null) {    // note: DO NOT USE !== operator
-            ret.push(v)
+            ret.push(v as NonNilOf<T>)
         }
     }
     return ret
@@ -407,11 +423,12 @@ export function arrayMinByOrUndefined<T, R>(
     return min
 }
 
-export function arrayMapToDict<T, R>(
+export function arrayMapToDict<T, R, D extends DictOf<R> = DictOf<R>>(
     array: T[],
-    mapper: ArrayElementFunction<T, [string, R]>
-): DictOf<R> {
-    const ret: DictOf<R> = {}
+    mapper: ArrayElementFunction<T, [string, R]>,
+    dest ?: D
+): D {
+    const ret: any = dest ?? {}
     const length = array.length
     for (let i = 0; i < length; i++) {
         const [key, v] = mapper(array[i], i, array)
@@ -422,9 +439,10 @@ export function arrayMapToDict<T, R>(
 
 export function arrayMapToSet<T, R>(
     array: T[],
-    mapper: ArrayElementFunction<T, R>
+    mapper: ArrayElementFunction<T, R>,
+    dest ?: Set<R>
 ): Set<R> {
-    const ret = new Set<R>()
+    const ret = dest ?? new Set<R>()
     const length = array.length
     for (let i = 0; i < length; i++) {
         const r = mapper(array[i], i, array)
@@ -435,9 +453,10 @@ export function arrayMapToSet<T, R>(
 
 export function arrayMapToMap<T, K, V>(
     array: T[],
-    mapper: ArrayElementFunction<T, [K, V]>
+    mapper: ArrayElementFunction<T, [K, V]>,
+    dest ?: Map<K, V>
 ): Map<K, V> {
-    const ret = new Map<K, V>()
+    const ret = dest ?? new Map<K, V>()
     const length = array.length
     for (let i = 0; i < length; i++) {
         const [key, v] = mapper(array[i], i, array)
@@ -453,8 +472,8 @@ export function arrayIntersect<T>(
     if (array.length === 0) return []
 
     const set = list instanceof Set ? list : new Set<T>(list)
-    if (set.size === 0) return [...array]
-    return this.filter(v => set.has(v))
+    if (set.size === 0) return []
+    return array.filter(v => set.has(v))
 }
 
 export function arrayExclude<T>(
@@ -464,36 +483,34 @@ export function arrayExclude<T>(
     if (array.length === 0) return []
 
     const set = list instanceof Set ? list : new Set<T>(list)
-    if (set.size === 0) return [...this]
-    return this.filter(v => !set.has(v))
+    if (set.size === 0) return [...array]
+    return array.filter(v => !set.has(v))
 }
 
 export function arrayChunk<T>(array: T[], size: number): T[][] {
     const length = array.length
     if (size <= 0 || length === 0)
-        return [this]
+        return [array]
 
     const ret: T[][] = []
     for (let i = 0; i < length; i += size) {
-        ret.push(this.slice(i, i + size))
+        ret.push(array.slice(i, i + size))
     }
     return ret
 }
 
-export function arrayLastN<T>(array: T[], size: number): T[] {
+export function arrayRight<T>(array: T[], size: number): T[] {
     if (size <= 0) return []
     return array.slice(-size)
 }
 
-export function arrayFirstN<T>(array: T[], size: number): T[] {
+export function arrayLeft<T>(array: T[], size: number): T[] {
     if (size <= 0) return []
     return array.slice(0, size)
 }
 
-export type ArrayKeyGroup<K, T> = [K, T[]]
-
-export function arrayGroupBy<T, K>(array: T[], selector: (e: T) => K): Array<ArrayKeyGroup<K, T>> {
-    const ret: Array<ArrayKeyGroup<K, T>> = []
+export function arrayGroupBy<T, K>(array: T[], selector: (e: T) => K): Array<ArrayElementGroup<K, T>> {
+    const ret: Array<ArrayElementGroup<K, T>> = []
     for (const e of array) {
         const key = selector(e)
         const group = ret.find(g => g[0] == key)
@@ -502,15 +519,6 @@ export function arrayGroupBy<T, K>(array: T[], selector: (e: T) => K): Array<Arr
         } else {
             ret.push([key, [e]])
         }
-    }
-    return ret
-}
-
-export function arrayFold<T, R>(array: T[], initial: R, operation: (acc: R, value: T, index: number, obj: T[]) => R): R {
-    let ret = initial
-    let length = array.length
-    for (let i = 0; i < length; i++) {
-        ret = operation(ret, array[i], i, array)
     }
     return ret
 }
