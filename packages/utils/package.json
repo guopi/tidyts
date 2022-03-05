@@ -5,6 +5,7 @@
   "homepage": "https://github.com/guopi/tidyts/tree/main/packages/utils",
   "author": "guopi.pro@gmail.com",
   "license": "MIT",
+  "private": false,
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
