@@ -1,7 +1,11 @@
 {
   "name": "@tidyts/base",
+  "description": "tidyts base",
   "version": "1.0.0",
-  "packageManager": "yarn@3.1.1",
+  "repository": "git@github.com:guopi/tidyts.git",
+  "homepage": "https://github.com/guopi/tidyts/tree/main/packages/base",
+  "author": "guopi.pro@gmail.com",
+  "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
