@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "build": "tsup index.ts --format cjs,esm --dts --clean",
-    "pub": "yarn build && npm publish"
+    "pub": "pnpm build && pnpm publish"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
