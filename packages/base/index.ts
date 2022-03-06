@@ -7,11 +7,35 @@ declare global {
     interface Object {
         txCall<T, R>(this: T, fn: (self: T) => R): R
 
-        txCall<T extends S, R, S, ARGS extends any[]>(this: T, fn: (self: S, ...args: ARGS) => R, ...args: ARGS): R
+        txCall<T, R, A1>(this: T, fn: (self: T, a1: A1) => R, a1: A1): R
+
+        txCall<T, R, A1, A2>(this: T, fn: (self: T, a1: A1, a2: A2) => R, a1: A1, a2: A2): R
+
+        txCall<T, R, A1, A2, A3>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3) => R, a1: A1, a2: A2, a3: A3): R
+
+        txCall<T, R, A1, A2, A3, A4>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4) => R, a1: A1, a2: A2, a3: A3, a4: A4): R
+
+        txCall<T, R, A1, A2, A3, A4, A5>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5) => R, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5): R
+
+        txCall<T, R, A1, A2, A3, A4, A5, A6>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6) => R, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6): R
+
+        txCall<T, R, A1, A2, A3, A4, A5, A6, A7>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6, a7: A7) => R, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6, a7: A7): R
 
         txAlso<T>(this: T, fn: (self: T) => any): T
 
-        txAlso<T extends S, S, ARGS extends any[]>(this: T, fn: (self: S, ...args: ARGS) => any, ...args: ARGS): T
+        txAlso<T, A1>(this: T, fn: (self: T, a1: A1) => any, a1: A1): T
+
+        txAlso<T, A1, A2>(this: T, fn: (self: T, a1: A1, a2: A2) => any, a1: A1, a2: A2): T
+
+        txAlso<T, A1, A2, A3>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3) => any, a1: A1, a2: A2, a3: A3): T
+
+        txAlso<T, A1, A2, A3, A4>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4) => any, a1: A1, a2: A2, a3: A3, a4: A4): T
+
+        txAlso<T, A1, A2, A3, A4, A5>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5) => any, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5): T
+
+        txAlso<T, A1, A2, A3, A4, A5, A6>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6) => any, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6): T
+
+        txAlso<T, A1, A2, A3, A4, A5, A6, A7>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6, a7: A7) => any, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6, a7: A7): T
     }
 }
 
