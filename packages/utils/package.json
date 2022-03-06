@@ -1,6 +1,6 @@
 {
   "name": "@tidyts/utils",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": "git@github.com:guopi/tidyts.git",
   "homepage": "https://github.com/guopi/tidyts/tree/main/packages/utils",
   "author": "guopi.pro@gmail.com",

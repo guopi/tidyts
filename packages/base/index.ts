@@ -15,27 +15,41 @@ declare global {
     }
 }
 
+function txCall(this: Object) {
+    if (arguments.length > 1) {
+        const args = Array.from(arguments)
+        args[0] = this
+        return arguments[0].apply(null, args)
+    } else {
+        return arguments[0](this)
+    }
+}
+
+function txAlso(this: Object) {
+    if (arguments.length > 1) {
+        const args = Array.from(arguments)
+        args[0] = this
+        arguments[0].apply(null, args)
+    } else {
+        arguments[0](this)
+    }
+    return this
+}
+
+export function defineExtensionFunction(proto: any, name: string, fn: Function) {
+    const current = proto[name]
+    if (current !== fn) {
+        if (current !== undefined)
+            throw new Error(`${name} already defined`)
+
+        Object.defineProperty(proto, name, { value: fn })
+    }
+}
+
 export function enableTidyExtends() {
     const proto = Object.prototype
-    if (typeof proto.txCall !== 'function') {
-        Object.defineProperty(proto, 'txCall', {
-            value: function xCall<T extends S, R, S, ARGS extends any[]>(
-                this: T, fn: (self: S, ...args: ARGS) => R, ...args: ARGS
-            ): R {
-                return fn(this, ...args)
-            }
-        })
-    }
-    if (typeof proto.txAlso !== 'function') {
-        Object.defineProperty(proto, 'txAlso', {
-            value: function xAlso<T extends S, S, ARGS extends any[]>(
-                this: T, fn: (self: S, ...args: ARGS) => any, ...args: ARGS
-            ): T {
-                fn(this, ...args)
-                return this
-            }
-        })
-    }
+    defineExtensionFunction(proto, 'txCall', txCall)
+    defineExtensionFunction(proto, 'txAlso', txAlso)
 }
 
 
