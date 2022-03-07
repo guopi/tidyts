@@ -5,41 +5,18 @@ export type DictOf<T> = {
 
 declare global {
     interface Object {
-        txCall<T, R>(this: T, fn: (self: T) => R): R
+        pipeWith_<T, R>(this: T, fn: (self: T) => R): R
 
-        txCall<T, R, A1>(this: T, fn: (self: T, a1: A1) => R, a1: A1): R
+        pipeWith_<T extends S, R, S, ARGS extends any[]>(this: T, fn: (self: S, ...args: ARGS) => R, ...args: ARGS): R
 
-        txCall<T, R, A1, A2>(this: T, fn: (self: T, a1: A1, a2: A2) => R, a1: A1, a2: A2): R
+        alsoWith_<T>(this: T, fn: (self: T) => any): T
 
-        txCall<T, R, A1, A2, A3>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3) => R, a1: A1, a2: A2, a3: A3): R
+        alsoWith_<T extends S, S, ARGS extends any[]>(this: T, fn: (self: S, ...args: ARGS) => any, ...args: ARGS): T
 
-        txCall<T, R, A1, A2, A3, A4>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4) => R, a1: A1, a2: A2, a3: A3, a4: A4): R
-
-        txCall<T, R, A1, A2, A3, A4, A5>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5) => R, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5): R
-
-        txCall<T, R, A1, A2, A3, A4, A5, A6>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6) => R, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6): R
-
-        txCall<T, R, A1, A2, A3, A4, A5, A6, A7>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6, a7: A7) => R, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6, a7: A7): R
-
-        txAlso<T>(this: T, fn: (self: T) => any): T
-
-        txAlso<T, A1>(this: T, fn: (self: T, a1: A1) => any, a1: A1): T
-
-        txAlso<T, A1, A2>(this: T, fn: (self: T, a1: A1, a2: A2) => any, a1: A1, a2: A2): T
-
-        txAlso<T, A1, A2, A3>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3) => any, a1: A1, a2: A2, a3: A3): T
-
-        txAlso<T, A1, A2, A3, A4>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4) => any, a1: A1, a2: A2, a3: A3, a4: A4): T
-
-        txAlso<T, A1, A2, A3, A4, A5>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5) => any, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5): T
-
-        txAlso<T, A1, A2, A3, A4, A5, A6>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6) => any, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6): T
-
-        txAlso<T, A1, A2, A3, A4, A5, A6, A7>(this: T, fn: (self: T, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6, a7: A7) => any, a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6, a7: A7): T
     }
 }
 
-function txCall(this: Object) {
+function pipeWith_(this: Object) {
     if (arguments.length > 1) {
         const args = Array.from(arguments)
         args[0] = this
@@ -49,7 +26,7 @@ function txCall(this: Object) {
     }
 }
 
-function txAlso(this: Object) {
+function alsoWith_(this: Object) {
     if (arguments.length > 1) {
         const args = Array.from(arguments)
         args[0] = this
@@ -70,10 +47,10 @@ export function defineExtensionFunction(proto: any, name: string, fn: Function) 
     }
 }
 
-export function enableTidyExtends() {
+export function enableTidyPipes() {
     const proto = Object.prototype
-    defineExtensionFunction(proto, 'txCall', txCall)
-    defineExtensionFunction(proto, 'txAlso', txAlso)
+    defineExtensionFunction(proto, 'pipeWith_', pipeWith_)
+    defineExtensionFunction(proto, 'alsoWith_', alsoWith_)
 }
 
 
