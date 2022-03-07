@@ -1,7 +1,7 @@
 {
   "name": "@tidyts/base",
   "description": "tidyts base",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "repository": "git@github.com:guopi/tidyts.git",
   "homepage": "https://github.com/guopi/tidyts/tree/main/packages/base",
   "author": "guopi.pro@gmail.com",
@@ -23,7 +23,6 @@
   ],
   "scripts": {
     "build": "tsup index.ts --format cjs,esm --dts --clean",
-    "pub": "pnpm build && pnpm publish"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
