@@ -1,7 +1,7 @@
 import { DictOf, NonNilOf } from '@tidyts/base'
 
 export type ArrayElementFunction<T, R> = (v: T, index: number, array: T[]) => R
-export type ArrayElementGroup<K, T> = [K, T[]]
+export type ArrayElementGroupWithKey<K, T> = [K, T[]]
 
 export function compareAny(a: any, b: any): number {
     if (a === b)
@@ -266,17 +266,40 @@ export function arraySortedByDescending<T>(
 async function arrayMapAsync<T, R>(
     array: T[],
     parallel: boolean,
-    mapper: (v: T) => Promise<R>
+    mapper: ArrayElementFunction<T, Promise<R>>
 ): Promise<R[]> {
-    if (array.length === 0)
+    const length = array.length
+    if (length === 0)
         return []
 
     if (parallel) {
         return Promise.all(array.map(mapper))
     } else {
         const ret: R[] = []
-        for (const v of array) {
-            ret.push(await mapper(v))
+        for (let i = 0; i < length; i++) {
+            ret.push(await mapper(array[i], i, array))
+        }
+        return ret
+    }
+}
+
+async function arrayMapNonNilAsync<T, R>(
+    array: T[],
+    parallel: boolean,
+    mapper: ArrayElementFunction<T, Promise<R> | undefined | null>
+): Promise<R[]> {
+    const length = array.length
+    if (length === 0)
+        return []
+
+    if (parallel) {
+        return Promise.all(arrayMapNonNil(array, mapper))
+    } else {
+        const ret: R[] = []
+        for (let i = 0; i < length; i++) {
+            const r = mapper(array[i], i, array)
+            if (r)
+                ret.push(await r)
         }
         return ret
     }
@@ -337,22 +360,6 @@ export function arrayCountIf<T, K>(
     return count
 }
 
-export function arraySum(array: number[]): number {
-    let sum = 0
-    for (const v of array) {
-        sum += v
-    }
-    return sum
-}
-
-export function arraySumBig(array: bigint[]): bigint {
-    let sum = 0n
-    for (const v of array) {
-        sum += v
-    }
-    return sum
-}
-
 export function arrayMinOrUndefined<T>(array: T[]): T | undefined {
     let length = array.length
     if (length === 0)
@@ -380,6 +387,36 @@ export function arrayMaxOrUndefined<T>(array: T[]): T | undefined {
     return max
 }
 
+export function arraySum(array: number[]): number {
+    let sum = 0
+    for (const v of array) {
+        sum += v
+    }
+    return sum
+}
+
+export function arraySumBigint(array: bigint[]): bigint {
+    let sum = 0n
+    for (const v of array) {
+        sum += v
+    }
+    return sum
+}
+
+export function arraySumOrUndefined(array: number[]): number | undefined
+export function arraySumOrUndefined(array: bigint[]): bigint | undefined
+export function arraySumOrUndefined<T extends number | bigint>(array: T[]): T | undefined {
+    let length = array.length
+    if (length === 0)
+        return undefined
+
+    let sum = array[length - 1]
+    for (let i = length - 2; i >= 0; i--) {
+        sum += array[i] as any
+    }
+    return sum
+}
+
 export function arraySumBy<T>(
     array: T[],
     selector: ArrayElementFunction<T, number>
@@ -391,13 +428,30 @@ export function arraySumBy<T>(
     return sum
 }
 
-export function arraySumBigBy<T>(
+export function arraySumBigintBy<T>(
     array: T[],
     selector: ArrayElementFunction<T, bigint>
 ): bigint {
     let sum = 0n
     for (let i = array.length - 1; i >= 0; i--) {
         sum += selector(array[i], i, array)
+    }
+    return sum
+}
+
+export function arraySumByOrUndefined(array: number[], selector: ArrayElementFunction<number, number>): number | undefined
+export function arraySumByOrUndefined(array: bigint[], selector: ArrayElementFunction<bigint, bigint>): bigint | undefined
+export function arraySumByOrUndefined<T extends number | bigint>(
+    array: T[],
+    selector: ArrayElementFunction<T, T>
+): T | undefined {
+    let length = array.length
+    if (length === 0)
+        return undefined
+
+    let sum = selector(array[length - 1], length - 1, array)
+    for (let i = length - 2; i >= 0; i--) {
+        sum += selector(array[i], i, array) as any
     }
     return sum
 }
@@ -524,15 +578,40 @@ export function arrayLeft<T>(array: T[], size: number): T[] {
     return array.slice(0, size)
 }
 
-export function arrayGroupBy<T, K>(array: T[], selector: (e: T) => K): Array<ArrayElementGroup<K, T>> {
-    const ret: Array<ArrayElementGroup<K, T>> = []
-    for (const e of array) {
-        const key = selector(e)
+export function arrayGroupBy<T, K>(
+    array: T[],
+    selector: ArrayElementFunction<T, K>,
+): Array<ArrayElementGroupWithKey<K, T>> {
+    const ret: Array<ArrayElementGroupWithKey<K, T>> = []
+    const length = array.length
+    for (let i = 0; i < length; i++) {
+        const v = array[i]
+        const key = selector(v, i, array)
         const group = ret.find(g => g[0] == key)
         if (group) {
-            group[1].push(e)
+            group[1].push(v)
         } else {
-            ret.push([key, [e]])
+            ret.push([key, [v]])
+        }
+    }
+    return ret
+}
+
+export function arrayGroupToMapBy<T, K>(
+    array: T[],
+    selector: ArrayElementFunction<T, K>,
+    dest?: Map<K, T[]>
+): Map<K, T[]> {
+    const ret = dest ?? new Map<K, T[]>()
+    const length = array.length
+    for (let i = 0; i < length; i++) {
+        const v = array[i]
+        const key = selector(v, i, array)
+        const group = ret.get(key)
+        if (group) {
+            group.push(v)
+        } else {
+            ret.set(key, [v])
         }
     }
     return ret

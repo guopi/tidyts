@@ -16,18 +16,32 @@ export function dictFilter<V>(
     return ret
 }
 
-export function dictMap<V, R>(
+export function dictReject<V>(
     src: DictOf<V>,
-    valueMapper: (v: V) => R,
-    keyMapper?: (k: string) => string,
-    dest?: DictOf<R>
-): DictOf<R> {
+    predicate: (k: string, v: V) => unknown,
+    dest ?: DictOf<V>
+): DictOf<V> {
     const ret = dest ?? {}
-    for (let [k, v] of Object.entries(src)) {
-        if (keyMapper)
-            k = keyMapper(k)
-        ret[k] = valueMapper(v)
+    for (const [k, v] of Object.entries(src)) {
+        if (!predicate(k, v)) {
+            ret[k] = v
+        }
     }
     return ret
 }
+
+export function dictMap<V, R>(
+    src: DictOf<V>,
+    mapper: (k: string, v: V) => [string, R] | undefined,
+    dest?: DictOf<R>
+): DictOf<R> {
+    const ret = dest ?? {}
+    for (const [k, v] of Object.entries(src)) {
+        const r = mapper(k, v)
+        if (r)
+            ret[r[0]] = r[1]
+    }
+    return ret
+}
+
 
