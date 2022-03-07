@@ -81,7 +81,7 @@ export function arrayAny<T>(
     return array.findIndex(predicate) >= 0
 }
 
-function arrayNone<T>(
+export function arrayNone<T>(
     array: T[],
     predicate: ArrayElementFunction<T, unknown>
 ): boolean {
@@ -128,9 +128,24 @@ export function arrayLastOrUndefined<T>(array: T[]): T | undefined {
     return array[array.length - 1]
 }
 
-export function arrayFilterNonNil<T>(array: T[], dest?: NonNilOf<T>[]): NonNilOf<T>[] {
+export function arrayFilter<T>(
+    array: T[],
+    predicate: ArrayElementFunction<T, unknown>,
+    dest?: T[]
+): T[] {
     const ret = dest ?? []
     const length = array.length
+    for (let i = 0; i < length; i++) {
+        const v = array[i]
+        if (predicate(v, i, array)) {
+            ret.push(v)
+        }
+    }
+    return ret
+}
+
+export function arrayFilterNonNil<T>(array: T[], dest?: NonNilOf<T>[]): NonNilOf<T>[] {
+    const ret = dest ?? []
     for (const v of array) {
         if (v != null) {    // note: DO NOT USE !== operator
             ret.push(v as NonNilOf<T>)
