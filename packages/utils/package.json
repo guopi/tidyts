@@ -1,6 +1,6 @@
 {
   "name": "@tidyts/utils",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "repository": "git@github.com:guopi/tidyts.git",
   "homepage": "https://github.com/guopi/tidyts/tree/main/packages/utils",
   "author": "guopi.pro@gmail.com",
@@ -31,6 +31,6 @@
     "typescript": "~4.5.5"
   },
   "dependencies": {
-    "@tidyts/base": "^1.0.4"
+    "@tidyts/base": "^1.0.5"
   }
 }
