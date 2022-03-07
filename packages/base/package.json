@@ -22,7 +22,7 @@
     "*.ts"
   ],
   "scripts": {
-    "build": "tsup index.ts --format cjs,esm --dts --clean",
+    "build": "tsup index.ts --format cjs,esm --dts --clean"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
