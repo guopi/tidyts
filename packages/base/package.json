@@ -1,7 +1,7 @@
 {
   "name": "@tidyts/base",
   "description": "tidyts base",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "repository": "git@github.com:guopi/tidyts.git",
   "homepage": "https://github.com/guopi/tidyts/tree/main/packages/base",
   "author": "guopi.pro@gmail.com",
@@ -19,7 +19,7 @@
   },
   "files": [
     "dist/",
-    "./*.ts"
+    "*.ts"
   ],
   "scripts": {
     "build": "tsup index.ts --format cjs,esm --dts --clean",
