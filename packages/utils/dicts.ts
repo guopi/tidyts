@@ -32,7 +32,7 @@ export function dictReject<V>(
 
 export function dictMap<V, R>(
     src: DictOf<V>,
-    mapper: (k: string, v: V) => [string, R] | undefined,
+    mapper: (k: string, v: V) => [string, R] | undefined | null,
     dest?: DictOf<R>
 ): DictOf<R> {
     const ret = dest ?? {}
